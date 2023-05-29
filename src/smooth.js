@@ -10,17 +10,13 @@ export function smooth(context, object){
     if(Array.isArray(object)){
         // do something with array
     }else{
-        if(!object.duration){
-            // get default duration
-            object.duration = context.options.duration;
-        }
         timeline.push(object);
     }
 
     // choose transition type
     switch(context.options.ease){
         case 'linear':
-            linear(context.target, object, context.duration);
+            linear(context.target, object, 6000);
             break;
         case 'ease-in':
             break;

@@ -13,12 +13,23 @@ export function linear(target, state, duration = 300){
 
 
     const currentTime = 0;
+    let timeout = 0;
+
     const lerp = (ts = 0) => {
         const delta = ts - currentTime;
-        console.log(delta);
-        requestAnimationFrame(lerp);
 
+        const progress = Math.min(delta/duration, 1);
+        console.log(progress);
 
+        for(const [key, value] of Object.entries(state)) {
+            target.style.transform = `${key}(${progress * value}px)`;
+        }
+        if (progress === 1) {
+            cancelAnimationFrame(timeout)
+            return;
+        }
+
+        timeout = requestAnimationFrame(lerp);
     };
     lerp()
 }
