@@ -36,6 +36,9 @@ export function init(context){
         context.options.ease = context.easeTypes[0];
     }
 
+    // toggle enabled class
+    context.target.classList.add(context._class.enabled)
+
     // after init
     if(isFunction(context.options.onInit)){
         context.options.onInit(context);

@@ -1,11 +1,12 @@
 import {init, validateTarget} from "./helpers";
 import {uid} from "./utils";
+import {smooth} from "./smooth";
 
 /**
  * Private class
  * */
 const defaultOptions = {
-    id: uid(),
+    id: uid('smooth-'),
     duration: 300,
     ease: 'linear',
     onInit: (self) => {
@@ -17,6 +18,8 @@ const defaultOptions = {
     onUpdate: (self) => {
     }
 };
+
+const easeTypes = ['linear', 'ease-in', 'ease-out'];
 
 class Smooth{
     constructor(target, options){
@@ -36,10 +39,19 @@ class Smooth{
         };
 
         // ease types
-        this.easeTypes = ['linear', 'ease-in', 'ease-out'];
+        this.easeTypes = easeTypes;
 
         // init options
         init(this);
+    }
+
+    smooth(object = {}){
+        if(!object){
+            console.warn('Invalid object');
+            return;
+        }
+
+        smooth(this, object);
     }
 }
 
@@ -53,7 +65,7 @@ class SmoothController{
     }
 
     add(instance = {}){
-        if(this.instances.find(i => i.id !== instance.id)){
+        if(!this.instances.length || this.instances.find(i => i.id !== instance.id)){
             this.instances.push(instance);
             return instance;
         }
