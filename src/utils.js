@@ -17,12 +17,12 @@ export function debounce(func, timeout = 200){
 
 /**
  * Generate unique ID
- * @param string
  * @return string
+ * @param prefix
  */
-const uid = function(prefix = ''){
+export function uid(prefix = ''){
     return prefix + Date.now().toString(36) + Math.random().toString(36).slice(2);
-};
+}
 
 
 /**
@@ -30,7 +30,7 @@ const uid = function(prefix = ''){
  * @param string
  * @return string
  * */
-function removeAccents(string){
+export function removeAccents(string){
     return string.normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
         .replace(/đ/g, 'd').replace(/Đ/g, 'D');
@@ -101,4 +101,14 @@ export function createDOMElement(options = {
  * */
 export function mapNumber(number, inMin, inMax, outMin, outMax){
     return (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+}
+
+
+/**
+ * Validate function
+ * @param fn
+ * @return boolean
+ */
+export function isFunction(fn){
+    return (typeof fn === 'function');
 }
