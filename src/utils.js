@@ -116,7 +116,7 @@ export function isFunction(fn){
 /**
  * Get pixel value
  */
-export function getPixelValue(target, state){
+export function convertToPixelValue(target, state){
     for(const [key, value] of Object.entries(state)){
         // get the right value of %
         if(typeof value === 'number' || !value.includes('%')) return;

@@ -16,8 +16,13 @@ dataTitles.forEach(e => e.innerHTML = packageInfo.name);
 dataDescriptions.forEach(e => e.innerHTML = packageInfo.description);
 
 // code
-Smooth.init('.square', {
+const instance = Smooth.init('.circle', {
     onInit: (self) => {
-        console.log(self);
     }
-})
+});
+console.log(instance);
+
+instance.smooth({
+    translateX: '50%',
+    translateY: '50%'
+});
