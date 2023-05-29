@@ -112,3 +112,45 @@ export function mapNumber(number, inMin, inMax, outMin, outMax){
 export function isFunction(fn){
     return (typeof fn === 'function');
 }
+
+/**
+ * Get pixel value
+ */
+export function getPixelValue(target, state){
+    for(const [key, value] of Object.entries(state)){
+        // get the right value of %
+        if(typeof value === 'number' || !value.includes('%')) return;
+
+        // position value to the parent element
+        const parentElm = target.offsetParent;
+        const parentBox = parentElm.getBoundingClientRect();
+
+        // translate
+        if(key.includes('translate')){
+            switch(key){
+                case 'translateX':
+                    state[key] = parseFloat(value) * 0.01 * target.getBoundingClientRect().width;
+                    break;
+                case 'translateY':
+                    state[key] = parseFloat(value) * 0.01 * target.getBoundingClientRect().height;
+                    break;
+            }
+        }
+        else if(key.includes('top')){
+            state[key] = parseFloat(value) * parentBox.height;
+        }
+        else if(key.includes('left')){
+            state[key] = parseFloat(value) * parentBox.width;
+        }
+        else if(key.includes('right')){
+            state[key] = parentBox.width - parseFloat(value) * parentBox.width;
+        }
+        else if(key.includes('bottom')){
+            state[key] = parentBox.height - parseFloat(value) * parentBox.height;
+        }
+        else {
+            // to the wrapper element
+            state[key] = parseFloat(value) * target.parentElement.getBoundingClientRect()[key];
+        }
+    }
+}
