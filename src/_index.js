@@ -45,13 +45,13 @@ class Smooth{
         init(this);
     }
 
-    smooth(object = {}){
-        if(!object){
+    smooth(from = {}, to = {}){
+        if(!from || !to){
             console.warn('Invalid object');
             return;
         }
 
-        smooth(this, object);
+        smooth(this, from, to);
     }
 }
 
