@@ -13,8 +13,6 @@ const defaultOptions = {
     },
 };
 
-const easeTypes = ['linear', 'ease-in', 'ease-out'];
-
 class Smooth{
     constructor(target, options){
         this._attr = {};
