@@ -1,5 +1,5 @@
 // style
-import './style.css';
+import './style.scss';
 
 // library
 import '@/_index.js';
@@ -23,7 +23,6 @@ const instance = Smooth.init('.circle', {
 
 instance.smooth({
     onUpdate: (data) => {
-        console.log(`translate3d(${data.progress * 500 + 'px'}, ${data.progress * 200 + 'px'}, 0px)`);
         data.target.style.transform = `translate3d(${data.progress * 500 + 'px'}, ${data.progress * 200 + 'px'}, 0px)`;
     },
     timing: 'ease', // string or function
