@@ -30,9 +30,6 @@ class Smooth{
             ...options
         };
 
-        // ease types
-        this.easeTypes = easeTypes;
-
         // init options
         init(this);
     }

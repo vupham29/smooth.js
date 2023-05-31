@@ -31,11 +31,6 @@ export function validateTarget(target){
  * */
 export function init(context){
     // validate ease type
-    // default is linear
-    if(!context.easeTypes.find(type => type === context.options.ease)){
-        context.options.ease = context.easeTypes[0];
-    }
-
     // toggle enabled class
     context.target.classList.add(context._class.enabled)
 
