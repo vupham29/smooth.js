@@ -1,4 +1,4 @@
-# Webpack-boilerplate
+# smooth.js
 
 ## Deployment
 
