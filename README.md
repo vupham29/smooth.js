@@ -8,8 +8,14 @@ Run `./public` in live server
 npm run dev
 ```
 
-Build files from `./src` and `./public` to `./dist` for production
+Build files from `./src` to `./dist` for production
 
 ```shell
-npm run build:prod
+npm run prod
+```
+
+Build files from `./src` and `./dev` to `./dist` for deploying site
+
+```shell
+npm run build
 ```
