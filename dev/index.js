@@ -20,9 +20,12 @@ const instance = Smooth.init('.circle', {
     onInit: (self) => {
     }
 });
-console.log(instance);
 
 instance.smooth({
-    translateX: '50%',
-    translateY: '50%'
+    onUpdate: (data) => {
+        console.log(`translate3d(${data.progress * 500 + 'px'}, ${data.progress * 200 + 'px'}, 0px)`);
+        data.target.style.transform = `translate3d(${data.progress * 500 + 'px'}, ${data.progress * 200 + 'px'}, 0px)`;
+    },
+    timing: 'ease', // string or function
+    duration: 1000,
 });

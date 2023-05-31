@@ -8,15 +8,9 @@ import {smooth} from "./smooth";
 const defaultOptions = {
     id: uid('smooth-'),
     duration: 300,
-    ease: 'linear',
+    timing: 'linear',
     onInit: (self) => {
     },
-    onStart: (self) => {
-    },
-    onComplete: (self) => {
-    },
-    onUpdate: (self) => {
-    }
 };
 
 const easeTypes = ['linear', 'ease-in', 'ease-out'];
@@ -45,13 +39,13 @@ class Smooth{
         init(this);
     }
 
-    smooth(from = {}, to = {}){
-        if(!from || !to){
+    smooth(state){
+        if(!state){
             console.warn('Invalid object');
             return;
         }
 
-        smooth(this, from, to);
+        smooth(this, state);
     }
 }
 
