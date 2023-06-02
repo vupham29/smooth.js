@@ -25,6 +25,5 @@ instance.smooth({
     onUpdate: (data) => {
         data.target.style.transform = `translate3d(${data.progress * 500 + 'px'}, ${data.progress * 200 + 'px'}, 0px)`;
     },
-    timing: 'ease', // string or function
     duration: 1000,
 });

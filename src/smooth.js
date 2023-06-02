@@ -1,4 +1,4 @@
-import {TIMING_FUNCTIONS} from "./config";
+import {TIMING_FUNCTIONS} from "./configs";
 
 /**
  * Smooth transition
@@ -20,15 +20,20 @@ export function smooth(context, state){
             case 'string':
                 // timing in easeTypes
                 const result = TIMING_FUNCTIONS.find(timingObj => timingObj.type === state.timing);
-                if(result){
-                    progress = result.func(timeFraction);
+
+                if(!result){
+                    console.error('Wrong type of timing function. Please check again!!!');
+                    return;
                 }
+
+                // get the progress
+                progress = result.func(timeFraction);
                 break;
             case 'function':
                 progress = state.timing(timeFraction);
                 break;
             default:
-                progress = context.timing(timeFraction);
+                progress = context.options.timing(timeFraction);
         }
 
         state.onUpdate({

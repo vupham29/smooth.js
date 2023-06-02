@@ -1,14 +1,15 @@
 import {init, validateTarget} from "./helpers";
 import {uid} from "./utils";
 import {smooth} from "./smooth";
+import {TIMING_FUNCTIONS} from "./configs";
 
 /**
  * Private class
  * */
 const defaultOptions = {
     id: uid('smooth-'),
-    duration: 300,
-    timing: 'linear',
+    duration: 300, // transition duration
+    timing: TIMING_FUNCTIONS[0].func, // linear
     onInit: (self) => {
     },
 };
