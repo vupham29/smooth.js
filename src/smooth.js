@@ -1,17 +1,25 @@
 import {TIMING_FUNCTIONS} from "./configs";
+import {lerp} from "./lerp";
+import {isFunction} from "./utils";
 
 /**
  * Smooth transition
  * */
 export function smooth(context, state){
+    /**
+     * lerp state
+     * */
+    if(state.timing === 'lerp'){
+        lerp(state);
+        return;
+    }
+
     let timeout = null, currentTime = 0;
     const duration = state.duration ?? context.duration;
 
     const animate = (ts = 0) => {
         const delta = ts - currentTime;
         const timeFraction = Math.min(delta / duration, 1);
-
-        console.log('first progress', timeFraction);
 
         /**
          * Check timing function
@@ -40,18 +48,28 @@ export function smooth(context, state){
 
         // add bound for progress
         progress = Math.min(1, progress);
-        console.log('last progress', progress);
 
-        state.onUpdate({
-            ...context,
-            progress
-        });
+        // update state
+        if(state.onUpdate && isFunction(state.onUpdate)){
+            state.onUpdate({
+                ...context,
+                progress,
+                timeout,
+            });
+        }
 
         /**
          * End animation
          * */
         if(progress === 1){
+            // remove raf
             cancelAnimationFrame(timeout);
+
+            // onComplete
+            if(state.onComplete && isFunction(state.onComplete)){
+                state.onComplete(context);
+            }
+
             return;
         }
 

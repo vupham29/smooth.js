@@ -21,11 +21,29 @@ const instance = Smooth.init('.circle', {
     }
 });
 
+const mouse = {
+    x: 0,
+    y: 0
+};
+
+const currentPosition = {
+    x: 0,
+    y: 0
+};
+
+instance.target.parentElement.addEventListener('mousemove', (e) => {
+    mouse.x = e.pageX - instance.target.parentElement.getBoundingClientRect().left - instance.target.getBoundingClientRect().width * 0.5;
+    mouse.y = e.pageY - instance.target.parentElement.getBoundingClientRect().top - instance.target.getBoundingClientRect().height * 0.5;
+});
+
 instance.smooth({
-    onUpdate: (data) => {
-        console.log(data.progress);
-        data.target.style.transform = `translate3d(${data.progress * 500 + 'px'}, ${data.progress * 200 + 'px'}, 0px)`;
+    onUpdate: (self) => {
+        currentPosition.x = self.lerp(currentPosition.x, mouse.x, 0.05);
+        currentPosition.y = self.lerp(currentPosition.y, mouse.y, 0.05);
+
+        console.log(currentPosition.x, currentPosition.y);
+
+        instance.target.style.transform = `translate3d(${currentPosition.x}px, ${currentPosition.y}px, 0)`;
     },
-    duration: 1000,
-    timing: (x) => Math.sin((x * Math.PI) / 2)
+    timing: 'lerp'
 });
