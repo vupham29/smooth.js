@@ -23,7 +23,9 @@ const instance = Smooth.init('.circle', {
 
 instance.smooth({
     onUpdate: (data) => {
+        console.log(data.progress);
         data.target.style.transform = `translate3d(${data.progress * 500 + 'px'}, ${data.progress * 200 + 'px'}, 0px)`;
     },
     duration: 1000,
+    timing: (x) => Math.sin((x * Math.PI) / 2)
 });

@@ -11,6 +11,8 @@ export function smooth(context, state){
         const delta = ts - currentTime;
         const timeFraction = Math.min(delta / duration, 1);
 
+        console.log('first progress', timeFraction);
+
         /**
          * Check timing function
          * */
@@ -35,6 +37,10 @@ export function smooth(context, state){
             default:
                 progress = context.options.timing(timeFraction);
         }
+
+        // add bound for progress
+        progress = Math.min(1, progress);
+        console.log('last progress', progress);
 
         state.onUpdate({
             ...context,
