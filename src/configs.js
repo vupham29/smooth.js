@@ -1,5 +1,6 @@
 /**
  * https://easings.net/
+ * https://gizma.com/easing/
  * */
 export const TIMING_FUNCTIONS = [
     {
