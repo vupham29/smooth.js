@@ -10,28 +10,20 @@
 
 ### Initialize
 
+#### Options
+
+| Name                  | Required | Default  | Description                                 |
+|-----------------------|----------|----------|---------------------------------------------|
+| `id`                  | ❌        | unique   | Id for clarifying/getting instance.         |
+| `timing`              | ❌        | linear   | Default timing function.                    |
+| `duration`            | ❌        | 300      | Duration of the animation in millisecond.   |
+| `onInit:(self) => {}` | ❌        | function | Callback after the library has initialized. |
+
 ```js
 const instance = Smooth.init('.circle', {
-    onInit: (self) => {
-    }
-});
-
-// methods
-instace.smooth({
-    // update each frame
-    onUpdate: (self) => {
-    },
-    timing: 'lerp' // type of timing functio
+    onInit: (self) => {}
 });
 ```
-
-### Options
-
-| Name       | Required | Default | Description                               |
-|------------|----------|---------|-------------------------------------------|
-| `id`       | ❌        | unique  | Id for clarifying/getting instance.       |
-| `timing`   | ❌        | linear  | Default timing function.                  |
-| `duration` | ❌        | 300     | Duration of the animation in millisecond. |
 
 ### Methods
 
@@ -56,7 +48,7 @@ instance.smooth({
     onUpdate: (self) => {
         self.target.style.transform = `translate3d(${data.progress + 'px'}, 0px, 0px)`;
     },
-    onComplete:(self) => {
+    onComplete: (self) => {
         self.target.classList.add('animated');
     }
 });
