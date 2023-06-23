@@ -31,6 +31,18 @@ const instance = Smooth.init('.circle', {
 |----------|---------------------------|
 | `smooth` | Animating the DOM Element |
 
+#### Timing
+
+Build in timing functions
+
+| Name             | Description                     |
+|------------------|---------------------------------|
+| `linear`         |                                 |
+| `ease`           |                                 |
+| `easeInOutCubic` |                                 |
+| `easeInOutExpo`  |                                 |
+| `lerp`           | The crazy one, should try it!!! |
+
 #### Events
 
 | Name                      | Description |
