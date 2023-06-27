@@ -11,10 +11,10 @@ export function smooth(context, state){
      * */
     if(state.timing === 'lerp'){
         lerp(state);
-        return;
+        return state;
     }
 
-    let timeout = null, currentTime = 0;
+    let currentTime = 0;
     const duration = state.duration ?? context.duration;
 
     const animate = (ts = 0) => {
@@ -54,7 +54,7 @@ export function smooth(context, state){
             state.onUpdate({
                 ...context,
                 progress,
-                timeout,
+                timeout:state.timeout,
             });
         }
 
@@ -63,7 +63,7 @@ export function smooth(context, state){
          * */
         if(progress === 1){
             // remove raf
-            cancelAnimationFrame(timeout);
+            cancelAnimationFrame(state.timeout);
 
             // onComplete
             if(state.onComplete && isFunction(state.onComplete)){
@@ -77,7 +77,9 @@ export function smooth(context, state){
         /**
          * Rerun per each frame
          * */
-        timeout = requestAnimationFrame(animate);
+        state.timeout = requestAnimationFrame(animate);
     };
     animate();
+
+    return state
 }

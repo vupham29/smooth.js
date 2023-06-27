@@ -31,6 +31,9 @@ class Smooth{
             ...options
         };
 
+        // smooth instance
+        this.instances = [];
+
         // init options
         init(this);
     }
@@ -41,7 +44,10 @@ class Smooth{
             return;
         }
 
-        smooth(this, state);
+        const instance = smooth(this, state);
+        if (instance) this.instances.push(instance);
+
+        return instance
     }
 }
 

@@ -16,10 +16,7 @@ dataTitles.forEach(e => e.innerHTML = packageInfo.name);
 dataDescriptions.forEach(e => e.innerHTML = packageInfo.description);
 
 // code
-const instance = Smooth.init('.circle', {
-    onInit: (self) => {
-    }
-});
+const instance = Smooth.init('.circle');
 
 const mouse = {
     x: 0,
@@ -36,14 +33,14 @@ instance.target.parentElement.addEventListener('mousemove', (e) => {
     mouse.y = e.pageY - instance.target.parentElement.getBoundingClientRect().top - instance.target.getBoundingClientRect().height * 0.5;
 });
 
-instance.smooth({
+const timeout =  instance.smooth({
     onUpdate: (self) => {
         currentPosition.x = self.lerp(currentPosition.x, mouse.x, 0.05);
         currentPosition.y = self.lerp(currentPosition.y, mouse.y, 0.05);
-
-        console.log(currentPosition.x, currentPosition.y);
 
         instance.target.style.transform = `translate3d(${currentPosition.x}px, ${currentPosition.y}px, 0)`;
     },
     timing: 'lerp'
 });
+console.log(timeout);
+window.ts = timeout

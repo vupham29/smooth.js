@@ -5,7 +5,7 @@ import {isFunction} from "./utils";
  * Linear Interpolation
  * */
 export const lerp = (state) => {
-    let timeout = null;
+    const timeout = state.timeout ?? null;
 
     const animate = () => {
 
@@ -17,7 +17,7 @@ export const lerp = (state) => {
             });
         }
 
-        timeout = requestAnimationFrame(animate);
+        state.timeout = requestAnimationFrame(animate);
     };
     animate();
 };
