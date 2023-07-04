@@ -24,18 +24,3 @@ export function validateTarget(target){
     }
     return target;
 }
-
-
-/**
- * Init options
- * */
-export function init(context){
-    // validate ease type
-    // toggle enabled class
-    context.target.classList.add(context._class.enabled)
-
-    // after init
-    if(isFunction(context.options.onInit)){
-        context.options.onInit(context);
-    }
-}
