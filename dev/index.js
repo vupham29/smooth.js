@@ -42,5 +42,3 @@ const timeout =  instance.smooth({
     },
     timing: 'lerp'
 });
-console.log(timeout);
-window.ts = timeout
