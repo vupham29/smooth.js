@@ -1,4 +1,3 @@
-import {init, validateTarget} from "./helpers";
 import {uid} from "./utils";
 import {smooth} from "./smooth";
 import {TIMING_FUNCTIONS} from "./configs";
@@ -14,10 +13,6 @@ const defaultOptions = {
 
 class Smooth{
     constructor(options = {}){
-        this._class = {
-            enabled: 'smoothjs-enabled',
-        };
-
         // options
         this.options = {
             ...defaultOptions,

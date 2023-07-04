@@ -1,5 +1,3 @@
-import {isFunction} from "./utils";
-
 /**
  * Validate DOM element
  * @param {string || object} target
