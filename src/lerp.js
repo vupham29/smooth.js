@@ -25,4 +25,4 @@ export const lerp = (state) => {
 /**
  * Lerp mapping value
  * */
-const lerpMap = (start, end, amt) => (1 - amt) * start + amt * end;
+const lerpMap = (start, end, amt = 0.05) => (1 - amt) * start + amt * end;

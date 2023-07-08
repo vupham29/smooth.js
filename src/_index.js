@@ -23,16 +23,16 @@ class Smooth{
         this.instances = [];
     }
 
-    smooth(state){
+    create(state){
         if(!state){
             console.warn('Invalid object');
             return;
         }
 
         const instance = smooth(this, state);
-        if (instance) this.instances.push(instance);
+        if(instance) this.instances.push(instance);
 
-        return instance
+        return instance;
     }
 }
 
