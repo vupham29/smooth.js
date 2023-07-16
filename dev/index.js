@@ -12,7 +12,7 @@ const dataTitles = document.querySelectorAll('[data-title]');
 const dataDescriptions = document.querySelectorAll('[data-description]');
 
 // update information
-dataTitles.forEach(e => e.innerHTML = packageInfo.name);
+dataTitles.forEach(e => e.innerHTML = packageInfo.prettyName);
 dataDescriptions.forEach(e => e.innerHTML = packageInfo.description);
 
 // code

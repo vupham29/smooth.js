@@ -11,14 +11,6 @@ export const TIMING_FUNCTIONS = [
         type: 'ease',
         func: ease
     },
-    {
-        type: 'easeInOutCubic',
-        func: easeInOutCubic
-    },
-    {
-        type: 'easeInOutExpo',
-        func: easeInOutExpo
-    },
 ];
 
 

@@ -25,12 +25,13 @@ const packageVersion = packageInfo.version;
 const packageAuthor = packageInfo.author.name;
 const packageHomepage = packageInfo.homepage;
 const packageLicense = packageInfo.license;
+const packageOutputName = packageInfo.outputName;
 
 // webpack banner
 const packageBannerConfig = {
     banner:
         `/**
- * ${packageName} v${packageVersion}
+ * ${packageOutputName} v${packageVersion}
  * @author ${packageAuthor}
  * @homepage ${packageHomepage}
  * @license ${packageLicense} ${new Date().getFullYear()}
@@ -60,5 +61,6 @@ module.exports = {
         packageHomepage,
         packageLicense,
         packageBannerConfig,
+        packageOutputName
     }
 };

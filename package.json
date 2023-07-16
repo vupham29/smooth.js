@@ -1,5 +1,7 @@
 {
   "name": "smoothjs",
+  "prettyName": "Smooth.js 🌊",
+  "outputName": "Smooth",
   "version": "0.0.1",
   "description": "A library for creating smooth transition with Javascript",
   "main": "./dist/webpack-boilerplate.min.js",

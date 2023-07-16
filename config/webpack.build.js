@@ -16,16 +16,7 @@ const entry = [config.paths.devDirectoryScript];
  * Build type with ENV variables
  * */
 const libraryTarget = process.env.TARGET;
-let filename, experiments = {}, library = undefined;
-
-if(libraryTarget === 'module'){
-    filename = `${config.packageInfo.packageName}.module.js`;
-    experiments = {
-        outputModule: true,
-    };
-}else{
-    filename = `${config.packageInfo.packageName}.min.js`;
-}
+let filename = `${config.packageInfo.packageOutputName}.min.js`, experiments = {}, library = undefined;
 
 // export
 module.exports = merge(common, {
@@ -124,7 +115,7 @@ module.exports = merge(common, {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: `${config.packageInfo.packageName}.min.css`,
+            filename: `${config.packageInfo.packageOutputName}.min.css`,
         }),
         new HtmlWebpackPlugin({
             template: path.join(config.paths.devDirectory, 'index.html'),

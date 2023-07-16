@@ -14,30 +14,38 @@ export function smooth(context, state){
         return state;
     }
 
+    // vars
     let currentTime = 0;
     const duration = state.duration ?? context.duration;
 
     const animate = (ts = 0) => {
         const delta = ts - currentTime;
-        const timeFraction = Math.min(delta / duration, 1);
+        let timeFraction = 0, customTimeFraction = false;
 
-        /**
-         * Check timing function
-         * */
+        // get timeFraction from state
+        if(typeof state.timeFraction === 'object' && state.timeFraction.value){
+            timeFraction = state.timeFraction.value;
+            customTimeFraction = true;
+        }else{
+            timeFraction = Math.min(delta / duration, 1);
+        }
+
+        // progress of the transition
         let progress = 0;
 
+        // type string or function (custom transition)
         switch(typeof state.timing){
             case 'string':
                 // timing in easeTypes
                 const result = TIMING_FUNCTIONS.find(timingObj => timingObj.type === state.timing);
 
                 if(!result){
-                    console.error('Wrong type of timing function. Please check again!!!');
-                    return;
+                    console.error('Wrong type of timing function. Please check the docs again!');
+                    console.warn('Using the default timing function (linear)');
+                    progress = TIMING_FUNCTIONS[0].func(timeFraction);
+                }else{
+                    progress = result.func(timeFraction);
                 }
-
-                // get the progress
-                progress = result.func(timeFraction);
                 break;
             case 'function':
                 progress = state.timing(timeFraction);
@@ -46,22 +54,20 @@ export function smooth(context, state){
                 progress = context.options.timing(timeFraction);
         }
 
-        // add bound for progress
+        // validate end value of the progress, only in [0, 1]
         progress = Math.min(1, progress);
 
-        // update state
+        // do callbacks
         if(state.onUpdate && isFunction(state.onUpdate)){
             state.onUpdate({
-                ...context,
-                progress,
-                timeout:state.timeout,
+                ...context, progress, timeout: state.timeout,
             });
         }
 
         /**
          * End animation
          * */
-        if(progress === 1){
+        if(progress === 1 && !customTimeFraction){
             // remove raf
             cancelAnimationFrame(state.timeout);
 
@@ -69,7 +75,6 @@ export function smooth(context, state){
             if(state.onComplete && isFunction(state.onComplete)){
                 state.onComplete(context);
             }
-
             return;
         }
 
@@ -81,5 +86,5 @@ export function smooth(context, state){
     };
     animate();
 
-    return state
+    return state;
 }

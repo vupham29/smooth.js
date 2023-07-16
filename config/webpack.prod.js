@@ -18,12 +18,12 @@ const libraryTarget = process.env.TARGET;
 let filename, experiments = {}, library = undefined;
 
 if(libraryTarget === 'module'){
-    filename = `${config.packageInfo.packageName}.module.js`;
+    filename = `${config.packageInfo.packageOutputName}.module.js`;
     experiments = {
         outputModule: true,
     };
 }else{
-    filename = `${config.packageInfo.packageName}.min.js`;
+    filename = `${config.packageInfo.packageOutputName}.min.js`;
 }
 
 // export
@@ -115,7 +115,7 @@ module.exports = merge(common, {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: `${config.packageInfo.packageName}.min.css`,
+            filename: `${config.packageInfo.packageOutputName}.min.css`,
         }),
         new webpack.BannerPlugin(config.packageInfo.packageBannerConfig)
     ],
