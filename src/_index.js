@@ -59,6 +59,7 @@ class Smooth{
             const index = this.instances.findIndex(isMatched);
 
             // remove rAF
+            instance.destroy = true;
             cancelAnimationFrame(result.timeout);
 
             // remove from instances

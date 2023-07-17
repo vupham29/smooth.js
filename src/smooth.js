@@ -33,6 +33,9 @@ export function smooth(instance){
             return;
         }
 
+        // do not update when the destroy method has invoked before
+        if(instance.destroy === true) return;
+
         // update the timeout value
         instance.timeout = requestAnimationFrame(animate);
     };
