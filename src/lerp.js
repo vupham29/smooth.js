@@ -1,28 +1,7 @@
-import {isFunction} from "./utils";
-
 /**
- * Lerp
  * Linear Interpolation
+ * @param {number} start
+ * @param {number} end
+ * @param {number} amt
  * */
-export const lerp = (state) => {
-    const timeout = state.timeout ?? null;
-
-    const animate = () => {
-
-        // update state
-        if(state.onUpdate && isFunction(state.onUpdate)){
-            state.onUpdate({
-                lerp: lerpMap,
-                timeout,
-            });
-        }
-
-        state.timeout = requestAnimationFrame(animate);
-    };
-    animate();
-};
-
-/**
- * Lerp mapping value
- * */
-const lerpMap = (start, end, amt = 0.05) => (1 - amt) * start + amt * end;
+export const lerp = (start, end, amt = 0.05) => (1 - amt) * start + amt * end;

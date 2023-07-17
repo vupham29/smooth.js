@@ -1,90 +1,88 @@
-import {TIMING_FUNCTIONS} from "./configs";
+import {DEFAULT_TIMING_FUNCTION, TIMING_FUNCTIONS} from "./configs";
 import {lerp} from "./lerp";
 import {isFunction} from "./utils";
 
 /**
  * Smooth transition
  * */
-export function smooth(context, state){
-    /**
-     * lerp state
-     * */
-    if(state.timing === 'lerp'){
-        lerp(state);
-        return state;
-    }
-
+export function smooth(instance){
     // vars
     let currentTime = 0;
-    const duration = state.duration ?? context.duration;
+    const duration = instance.duration;
+
+    // get timing function
+    const timingFunction = getTimingFunction(instance);
 
     const animate = (ts = 0) => {
+        // get deviation time value
         const delta = ts - currentTime;
-        let timeFraction = 0, customTimeFraction = false;
 
-        // get timeFraction from state
-        if(typeof state.timeFraction === 'object' && typeof state.timeFraction.value === 'number'){
-            timeFraction = state.timeFraction.value;
-            customTimeFraction = true;
-        }else{
-            timeFraction = Math.min(delta / duration, 1);
-        }
+        // get time fraction value
+        const hasCustomTimeFraction = typeof instance.customTimeFraction === 'object' && typeof instance.customTimeFraction.value === 'number';
+        let timeFraction = hasCustomTimeFraction ? instance.customTimeFraction.value : Math.min(delta / duration, 1);
 
-        // progress of the transition
-        let progress = 0;
-
-        // type string or function (custom transition)
-        switch(typeof state.timing){
-            case 'string':
-                // timing in easeTypes
-                const result = TIMING_FUNCTIONS.find(timingObj => timingObj.type === state.timing);
-
-                if(!result){
-                    console.error('Wrong type of timing function. Please check the docs again!');
-                    console.warn('Using the default timing function (linear)');
-                    progress = TIMING_FUNCTIONS[0].func(timeFraction);
-                }else{
-                    progress = result.func(timeFraction);
-                }
-                break;
-            case 'function':
-                progress = state.timing(timeFraction);
-                break;
-            default:
-                progress = context.options.timing(timeFraction);
-        }
-
-        // validate end value of the progress, only in [0, 1]
-        progress = Math.min(1, progress);
+        // validate end value of the progress, only in [0, 1] or undefined (for freedom animation)
+        const progress = timingFunction === true ? undefined : Math.min(1, timingFunction(timeFraction));
 
         // do callbacks
-        if(state.onUpdate && isFunction(state.onUpdate)){
-            state.onUpdate({
-                ...context, progress, timeout: state.timeout,
-            });
-        }
+        doCallbacks(instance, progress);
 
-        /**
-         * End animation
-         * */
-        if(progress === 1 && !customTimeFraction){
-            // remove raf
-            cancelAnimationFrame(state.timeout);
-
-            // onComplete
-            if(state.onComplete && isFunction(state.onComplete)){
-                state.onComplete(context);
-            }
+        // destroy the animation
+        if(progress === 1 && instance.destroyWhenCompleted){
+            instance.destroy();
             return;
         }
 
-
-        /**
-         * Rerun per each frame
-         * */
-        state.timeout = requestAnimationFrame(animate);
+        // update the timeout value
+        instance.timeout = requestAnimationFrame(animate);
     };
     animate();
 
-    return state;
+    return instance;
 }
+
+
+/**
+ * Get timing function
+ * @param {object} instance
+ * @return {function}
+ * */
+const getTimingFunction = (instance) => {
+    // register rAF on this instance, not constraint by any value
+    if(typeof instance.timing === 'boolean' && instance.timing) return true;
+
+    // custom function
+    if(typeof instance.timing === 'function') return instance.timing;
+
+    // invalid type
+    if(typeof instance.timing !== 'string'){
+        console.warn('Invalid timing function, using the default timing function');
+        return DEFAULT_TIMING_FUNCTION;
+    }
+
+    // timing in TIMING FUNCTIONS list
+    const result = TIMING_FUNCTIONS.find(t => t.type === instance.timing);
+    if(result) return result.func;
+
+    console.warn('Wrong type of timing function. Please check the docs again!');
+    console.warn('Using the default timing function (linear)');
+    return DEFAULT_TIMING_FUNCTION;
+};
+
+
+/**
+ * Do callbacks
+ * @param {object} instance
+ * @param {number|undefined} progress
+ * @return void
+ * */
+const doCallbacks = (instance, progress) => {
+    // do callbacks
+    if(isFunction(instance.onUpdate)){
+        instance.onUpdate({
+            ...instance,
+            progress,
+            lerp: lerp
+        });
+    }
+};

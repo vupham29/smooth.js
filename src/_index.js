@@ -1,38 +1,71 @@
 import {uid} from "./utils";
 import {smooth} from "./smooth";
-import {TIMING_FUNCTIONS} from "./configs";
+import {DEFAULT_TIMING_FUNCTION} from "./configs";
 
 /**
  * Private class
  * */
-const defaultOptions = {
-    id: uid('smooth-'),
-    duration: 300, // transition duration
-    timing: TIMING_FUNCTIONS[0].func, // linear
-};
-
 class Smooth{
-    constructor(options = {}){
-        // options
-        this.options = {
-            ...defaultOptions,
-            ...options
-        };
-
+    constructor(){
         // smooth instance
         this.instances = [];
     }
 
     create(state){
-        if(!state){
-            console.warn('Invalid object');
-            return;
-        }
+        const instance = {
+            id: uid('smooth-'),
 
-        const instance = smooth(this, state);
-        if(instance) this.instances.push(instance);
+            // simple animation
+            timing: DEFAULT_TIMING_FUNCTION,
+            duration: 300,
+
+            // custom timing fraction (the value in [0, 1])
+            // object value (for reference when the value changed)
+            customTimeFraction: undefined,
+
+            // destroy when completed
+            destroyWhenCompleted: true,
+
+            // callback
+            onUpdate: self => {
+            },
+            ...state
+        };
+
+        // register the smooth animation
+        smooth(instance);
+
+        // register destroy method
+        instance.destroy = this.destroy.bind(this, instance);
+
+        // add to the instances
+        this.instances.push(instance);
 
         return instance;
+    }
+
+    get(id){
+        // matched condition
+        const isMatched = (i) => i.id === id;
+        return this.instances.find(isMatched);
+    }
+
+    destroy(instance){
+        // matched condition
+        const isMatched = (i) => i.id === instance.id;
+
+        const result = this.instances.find(isMatched);
+        if(result){
+            const index = this.instances.findIndex(isMatched);
+
+            // remove rAF
+            cancelAnimationFrame(result.timeout);
+
+            // remove from instances
+            this.instances.splice(index, 1);
+            return true;
+        }
+        return false;
     }
 }
 
@@ -40,4 +73,4 @@ class Smooth{
 /**
  * Public library
  * */
-window.Smooth = new Smooth()
+window.Smooth = new Smooth();
