@@ -23,7 +23,7 @@ export function smooth(context, state){
         let timeFraction = 0, customTimeFraction = false;
 
         // get timeFraction from state
-        if(typeof state.timeFraction === 'object' && state.timeFraction.value){
+        if(typeof state.timeFraction === 'object' && typeof state.timeFraction.value === 'number'){
             timeFraction = state.timeFraction.value;
             customTimeFraction = true;
         }else{
