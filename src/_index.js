@@ -32,11 +32,11 @@ class Smooth{
             ...state
         };
 
-        // register the smooth animation
-        smooth(instance);
-
         // register destroy method
         instance.destroy = this.destroy.bind(this, instance);
+
+        // register the smooth animation
+        smooth(instance);
 
         // add to the instances
         this.instances.push(instance);
