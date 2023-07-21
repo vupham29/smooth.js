@@ -18,16 +18,57 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-    <h1 data-title>This is a webpack boilerplate!</h1>
-    <p data-description></p>
+<div data-sc>
+    <div data-sc-inner>
+        <section>
+            <div class="container">
+                <h1 data-title>This is a webpack boilerplate!</h1>
+                <p data-description style="margin-bottom:80px"></p>
+                <h2>Init with vanilla Javascript</h2>
+                <pre>
+Smooth.create({
+    id: 'smooth', // string
+    timing: 'linear', // boolean (true), string, function
+    duration: 300, // number
 
-    <section>
-        <h2>With lerp timing function</h2>
-        <div class="square">
-            <div class="circle"></div>
+    destroyWhenCompleted: true, // boolean
+    customTimeFraction: undefined, // object {value: timeFraction}
+
+    onUpdate: (self) => {
+    }
+});
+        </pre>
+            </div>
+        </section>
+        <section class="fl-center" style="background:coral">
+            <div class="container">
+                <h3>Smooth Scrolling</h3>
+                <p>Create smooth scrolling effect to entire the page</p>
+            </div>
+        </section>
+        <section class="fl-center">
+            <div class="container">
+                <h3>Parallax Image</h3>
+                <p>Create parallax effect for image with Scroll Trigger and Smooth.js</p>
+                <div data-parallax style="margin-top:50px">
+                    <img src="./andrew-kambel--x92Ig1Lsf4-unsplash.jpg" alt="image">
+                </div>
+            </div>
+        </section>
+        <section style="background:deepskyblue" class="fl-center" data-custom-cursor>
+            <div class="container">
+                <h3>Custom cursor</h3>
+                <p>Create custom cursor with Smooth.js and Position.js</p>
+                <div class="panels">
+                    <button>Hover me</button>
+                </div>
+            </div>
+        </section>
+        <div data-cursor>
+            <div data-cursor-wrapper></div>
+            <div data-cursor-inner></div>
         </div>
-    </section>
+    </div>
 </div>
 </body>
 </html>
